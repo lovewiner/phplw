@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="__STATIC__/admin/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/admin/common/common.css">
+    <link rel="stylesheet" href="__STATIC__/admin/bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="__STATIC__/admin/layui/layui.js"></script>
+</head>
+<body style="padding-top: 20px; margin: 0 4px;">
+<div class="header">
+    <span>管理员列表</span>
+    <button class="layui-btn layui-btn-sm" onclick="add()">添加</button>
+    <div></div>
+</div>
+<table class="layui-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>用户名</th>
+        <th>真实姓名</th>
+        <th>头像</th>
+        <th>角色</th>
+        <th>状态</th>
+        <th>添加时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {volist name="data" id="v" key="k"}
+    <tr>
+        <td>{$k}</td>
+        <td>{$v.username}</td>
+        <td>{$v.truename}</td>
+        <td><img src="{$v.img}" style="height: 40px;" alt=""></td>
+<!--         <td>{eq name="$v.gid" value="1"}普通会员{else/}尊贵会员{/eq}</td>-->
+        <td>
+            {volist name="groups" id="vo"}
+            {if $v.gid==$vo.gid}
+            {$vo.title}
+            {/if}
+            {/volist}
+        </td>
+        <!-- <td>{eq name="$v.status" value="0"}正常{else/}禁用{/eq}</td> -->
+        <td>{$v.status==0?"正常":'<span style="color: red;">禁用</span>'}</td>
+        <!-- 加粗 -->
+        <!-- <td>{$v.status==0?"正常":'<span style="color: red;font-weight:bold;">禁用</span>'}</td> -->
+        <td>{:date('Y-m-d H:i:s',$v.add_time)}</td>
+        <td>
+            <a href="javascript:;" onclick="edit({$v.id})" class="layui-btn layui-btn-sm">编辑</a>
+            <a href="javascript:;" onclick="del({$v.id})" class="layui-btn layui-btn-sm layui-btn-danger del">删除</a>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+<div style="text-align: center">
+    {$data|raw}
+</div>
+<script type="text/javascript">
+    layui.use(['layer'],function(){
+        layer=layui.layer;
+        $=layui.jquery;
+    });
+    //添加管理员
+    function edit(id){
+        //iframe层
+        layer.open({
+            type: 2,
+            title: '编辑管理员',
+            shadeClose: false,//点击背景关闭
+            shade: 0.8,//阴影
+            area: ['480px', '500px'],//宽度、高度
+            content: "{:url('manager_edit')}?id=" +id  //iframe的url
+        });
+    }
+    function add(){
+        //iframe层
+        layer.open({
+            type: 2,
+            title: '添加管理员',
+            shadeClose: false,//点击背景关闭
+            shade: 0.8,//阴影
+            area: ['480px', '500px'],//宽度、高度
+            content: "{:url('manager_add')}" //iframe的url
+        });
+    }
+    //删除
+    function del(id) {
+        layer.confirm('确定要删除该管理员吗?', {icon: 3, title: '温馨提示'}, function (index) {
+            $.post("{:url('manager_del')}", {'id': id}, function (res) {
+                if (res.code > 0) {
+                    layer.alert(res.msg, {icon: 2});
+                } else {
+                    layer.msg(res.msg, {icon: 1});
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+                }
+            }, 'json');
+        });
+    }
+</script>
+</body>
+</html>
