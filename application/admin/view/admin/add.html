@@ -11,7 +11,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-inline">
-            <input type="text" class="layui-input" name="card" value="{:time()}">
+            <input type="text" class="layui-input" name="card" value="{:time()}" maxlength="10">
         </div>
     </div>
     <div class="layui-form-item">
@@ -25,12 +25,12 @@
             </select>
         </div>
     </div>
-<!--    <div class="layui-form-item">-->
-<!--        <label class="layui-form-label">姓&nbsp;&nbsp;&nbsp;&nbsp;名</label>-->
-<!--        <div class="layui-input-inline">-->
-<!--            <input type="text" class="layui-input" name="truename" value="" placeholder="*保存后不可更改">-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">充值金额</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" name="money" value="">
+        </div>
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">状&nbsp;&nbsp;&nbsp;&nbsp;态</label>
         <div class="layui-input-inline">
@@ -52,9 +52,19 @@
     //保存管理员
     function save(){
         var card=$.trim($('input[name="card"]').val());
+        var carsLength=$.trim($('input[name="card"]').val().length);
         var gid =$('select[name="gid"]').val();
+        var money=$.trim($('input[name="money"]').val());
         if(card==""){
-            layer.msg("请输入用户名",{icon:2});
+            layer.msg("请输入卡号",{icon:2});
+            return;
+        }
+        if(money==""){
+            layer.msg("请输入金额",{icon:2});
+            return;
+        }
+        if(carsLength<=6){
+            layer.msg("卡号不得少于6位",{icon:2});
             return;
         }
         if(gid==0){

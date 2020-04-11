@@ -16,17 +16,10 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">等级权限</label>
-        {volist name="menus_list" id="vo"}
-        <hr>
+        <label class="layui-form-label">折扣</label>
         <div class="layui-input-block">
-            <input type="checkbox" name="menu[{$vo.mid}]" lay-skin="primary" title="{$vo.title}" {:isset($role['rights']) && $role['rights'] && in_array($vo.mid,$role['rights'])?'checked':''}>
-            <hr>
-            {volist name="vo.children" id="cvo"}
-            <input type="checkbox" name="menu[{$cvo.mid}]" lay-skin="primary" title="{$cvo.title}" {:isset($role['rights']) && $role['rights'] && in_array($cvo.mid,$role['rights'])?'checked':''}>
-            {/volist}
+            <input type="text"  autocomplete="off" class="layui-input" name="discount" value="{$role.discount}">
         </div>
-        {/volist}
     </div>
 </form>
 <div class="layui-form-item">

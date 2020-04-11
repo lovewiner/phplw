@@ -12,7 +12,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-inline">
-            <input type="text" class="layui-input" name="username" value="{$item.username}">
+            <input type="text" autocomplete="off" class="layui-input" name="username" value="{$item.username}">
         </div>
     </div>
     <div class="layui-form-item">
@@ -44,7 +44,7 @@
                 <i class="layui-icon">&#xe67c;</i>上传
             </button>
             <img src="{$item.img}" id="pre_img" style="height: 30px;" />
-            <input type="hidden" name="img">
+            <input type="hidden" name="img" value="{$item.img}">
         </div>
     </div>
     <div class="layui-form-item">

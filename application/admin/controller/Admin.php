@@ -88,13 +88,16 @@ class Admin extends Base
         $id = trim(input('post.id'));
         $data['card']=(int)input('post.card');
         $data['gid'] = (int)input('post.gid');
+        $data['points'] = (int)input('post.points');
         $data['status'] = (int)input('post.status');
+        $data['money'] = trim(input('post.money'));
         if(!$data['card']){
             exit(json_encode(array('code'=>1,'msg'=>'卡号不能为空')));
         }
         if(!$data['gid']){
             exit(json_encode(array('code'=>1,'msg'=>'未选择角色')));
         }
+
         if($id==0){
             //检查用户名是否重复
             $item=Db::name('vip_manager')->where('card',$data['card'])->find();

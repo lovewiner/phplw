@@ -18,6 +18,7 @@
     <tr>
         <th>ID</th>
         <th>会员等级</th>
+        <th>折扣</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -26,6 +27,7 @@
     <tr>
         <td>{$vo.gid}</td>
         <td>{$vo.title}</td>
+        <td>{$vo.discount}</td>
         <td>
             <button class="layui-btn layui-btn-xs layui-btn-warm" onclick="add({$vo.gid})">编辑</button>
             <button class="layui-btn layui-btn-xs layui-btn-danger" onclick="del({$vo.gid})">删除</button>
